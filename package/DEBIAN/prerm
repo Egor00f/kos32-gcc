@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "Remove toolchain dir"
+rm -R /home/autobuild/tools/win32
+
+echo "remove toolchain dir from PATH"
+sed 'export PATH=$PATH:/home/autobuild/tools/win32/bin' /etc/environment

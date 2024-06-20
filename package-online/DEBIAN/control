@@ -1,0 +1,11 @@
+Package: kos32
+Version: 0.0.1
+Section: devel
+Priority: optional
+Depends: libgmp10, libc6, libmpfr6
+Pre-Depends: bash, wget (>=1.0), p7zip-full
+Architecture: all
+Essential: no
+Installed-Size: 123968
+Maintainer: Egor00f
+Description: gcc toolchain for KolibriOS

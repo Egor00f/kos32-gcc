@@ -1,0 +1,59 @@
+#!/bin/bash
+
+
+set -e
+
+print_msg(){
+    echo -e "\e[34m$1\e[0m"
+}
+
+print_ok(){
+    echo -e "\e[32m$1\e[0m"
+}
+
+print_err(){
+    echo -e "\e[31m$1\e[0m"
+    exit
+}
+
+check_utils(){
+    printf "%s: " $1
+    if command -v $1 &> /dev/null
+    then
+        echo ''
+    else
+        print_err "no\r"
+	print_msg "install wget and 7z and try again"
+    fi
+}
+
+
+check_utils wget
+check_utils 7z
+
+
+libs_dir=http://builds.kolibrios.org/en_US/data/contrib/sdk/lib
+
+
+sudo ln -sf /usr/lib/x86_64-linux-gnu/libisl.so.10.2.2 /usr/lib/x86_64-linux-gnu/libisl.so.10
+sudo ln -sf /usr/lib/x86_64-linux-gnu/libisl.so.10.2.2 /usr/lib/libisl.so.10
+sudo chmod go-w /usr/lib/x86_64-linux-gnu/libisl.so.10
+sudo chmod go-w /usr/lib/x86_64-linux-gnu/libisl.so.10.2.2
+sudo ln -sf /usr/lib/x86_64-linux-gnu/libmpfr.so.6 /usr/lib/x86_64-linux-gnu/libmpfr.so.4
+sudo ln -sf /usr/lib/libmpfr.so.6 /usr/lib/libmpfr.so.4
+
+#if ! grep -q 'export PATH=$PATH:/home/autobuild/tools/win32/bin' ~/.bashrc; then
+#  export PATH=$PATH:/home/autobuild/tools/win32/bin
+#  print_msg "Adding '/home/autobuild/tools/win32/bin' to '~/.bashrc'"
+#  echo 'export PATH=$PATH:/home/autobuild/tools/win32/bin' >> ~/.bashrc
+#
+#  export PATH=$PATH:/home/autobuild/tools/win32/bin
+#fi
+
+exportpath=home/autobuild/tools/win32/bin
+
+sudo echo $exportpath >> /etc/environment
+
+export PATH=$PATH:$exportpath
+
+print_ok "Installation was successful!"
