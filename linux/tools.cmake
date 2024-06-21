@@ -1,0 +1,22 @@
+
+if(UNIX)
+    SET(TOOLCHAIN_DIR "/home/autobuild/tools/win32")
+    set(SUFFIX "")
+endif(UNIX)
+if(WINDOWS)
+    SET(TOOLCHAIN_DIR "C:/MinGW/msys/1.0/home/autobuild/tools/win32")
+    set(SUFFIX ".exe")
+endif(WINDOWS)
+
+
+SET(CMAKE_C_COMPILER "${TOOLCHAIN_DIR}/bin/kos32-gcc${SUFFIX}")
+SET(CMAKE_CXX_COMPILER "${TOOLCHAIN_DIR}/bin/kos32-g++${SUFFIX}")
+SET(CMAKE_LINKER "${TOOLCHAIN_DIR}/bin/kos32-ld${SUFFIX}")
+SET(CMAKE_AR "${TOOLCHAIN_DIR}/bin/kos32-ar${SUFFIX}")
+set(CMAKE_C_COMPILER_AR "${TOOLCHAIN_DIR}/bin/kos32-gcc-ar${SUFFIX}")
+set(CMAKE_CXX_COMPILER_AR "${TOOLCHAIN_DIR}/bin/kos32-gcc-ar${SUFFIX}")
+set(CMAKE_STRIP "${TOOLCHAIN_DIR}/bin/kos32-strip${SUFFIX}")
+
+
+set(CMAKE_CXX_STANDARD_COMPUTED_DEFAULT "11")
+set(CMAKE_CXX_COMPILER_VERSION "5.4.0")
