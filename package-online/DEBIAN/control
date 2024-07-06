@@ -2,7 +2,7 @@ Package: kos32
 Version: 0.0.1
 Section: devel
 Priority: optional
-Depends: libgmp10, libc6, libmpfr6
+Depends: libgmp10, libc6:amd64, libmpfr6
 Pre-Depends: bash, wget (>=1.0), p7zip-full
 Architecture: all
 Essential: no
