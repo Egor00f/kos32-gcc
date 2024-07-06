@@ -3,6 +3,14 @@
 
 set -e
 
+print_msg(){
+    echo -e "\e[34m$1\e[0m"
+}
+
+print_ok(){
+    echo -e "\e[32m$1\e[0m"
+}
+
 print_err(){
     echo -e "\e[31m$1\e[0m"
     exit
@@ -12,7 +20,7 @@ check_utils(){
     printf "%s: " $1
     if command -v $1 &> /dev/null
     then
-        echo " "
+        echo ''
     else
         print_err "no\r"
 	print_msg "install wget and 7z and try again"
@@ -23,46 +31,15 @@ check_utils(){
 check_utils wget
 check_utils 7z
 
-sudo mkdir -p /home/autobuild/tools
 
-wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/x86_64-linux-kos32-5.4.0.7z -O /home/autobuild/tools/kos32-toolchain.7z
-
-cd /home/autobuild/tools/
-7z x -y kos32-toolchain.7z
-rm -rf kos32-toolchain.7z
-
-cd /home/autobuild/tools/win32/mingw32
-wget http://ftp.kolibrios.org/users/Serge/new/Toolchain/sdk-28-10-16.7z
-7z x -y sdk-28-10-16.7z
-rm -rf sdk-28-10-16.7z
-
-cd /tmp
-sudo wget http://board.kolibrios.org/download/file.php?id=8301libisl.so.10.2.2.7z -O /tmp/libisl.so.10.2.2.7z
-sudo 7z x -y libisl.so.10.2.2.7z
-
-if ! [ -d /usr/lib/x86_64-linux-gnu/ ]; then
-    sudo mkdir -p /usr/lib/x86_64-linux-gnu/
-fi
-
-sudo mv /tmp/libisl.so.10.2.2 /usr/lib/x86_64-linux-gnu/libisl.so.10.2.2
 sudo ln -sf /usr/lib/x86_64-linux-gnu/libisl.so.10.2.2 /usr/lib/x86_64-linux-gnu/libisl.so.10
 sudo ln -sf /usr/lib/x86_64-linux-gnu/libisl.so.10.2.2 /usr/lib/libisl.so.10
 sudo chmod go-w /usr/lib/x86_64-linux-gnu/libisl.so.10
 sudo chmod go-w /usr/lib/x86_64-linux-gnu/libisl.so.10.2.2
-
 sudo ln -sf /usr/lib/x86_64-linux-gnu/libmpfr.so.6 /usr/lib/x86_64-linux-gnu/libmpfr.so.4
 sudo ln -sf /usr/lib/libmpfr.so.6 /usr/lib/libmpfr.so.4
-
-#if ! grep -q 'export PATH=$PATH:/home/autobuild/tools/win32/bin' ~/.bashrc; then
-#  export PATH=$PATH:/home/autobuild/tools/win32/bin
-#  print_msg "Adding '/home/autobuild/tools/win32/bin' to '~/.bashrc'"
-#  echo 'export PATH=$PATH:/home/autobuild/tools/win32/bin' >> ~/.bashrc
-#
-#  export PATH=$PATH:/home/autobuild/tools/win32/bin
-#fi
 
 
 echo 'export PATH=$PATH:/home/autobuild/tools/win32/bin' >> /etc/environment
 
 export PATH=$PATH:/home/autobuild/tools/win32/bin
-
